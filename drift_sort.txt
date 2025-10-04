@@ -1,0 +1,26 @@
+#MedianDriftSort psuedo-code for inplementations into your own language
+
+function MedianDriftSort(arr, left, right):
+    if left >= right:
+        return
+
+    # Step 1: choose median index
+    medianIndex = (left + right) // 2
+    medianValue = arr[medianIndex]
+
+    # Step 2: drift elements relative to median
+    for i from left to right:
+        if i == medianIndex:
+            continue
+        if arr[i] < medianValue and i > medianIndex:
+            # move element just before median
+            move arr[i] before arr[medianIndex]
+            medianIndex = medianIndex + 1  # median shifts right
+        else if arr[i] > medianValue and i < medianIndex:
+            # move element just after median
+            move arr[i] after arr[medianIndex]
+            medianIndex = medianIndex - 1  # median shifts left
+
+    # Step 3: recursively sort left and right partitions
+    MedianDriftSort(arr, left, medianIndex - 1)
+    MedianDriftSort(arr, medianIndex + 1, right)
